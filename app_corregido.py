@@ -178,15 +178,16 @@ Desde esta web se permite al usuario:
     """)
 
 elif menu == "Memoria del proyecto":
+    import streamlit.components.v1 as components
     st.subheader("Memoria del proyecto")
-    with open("Memoria Proyecto.pdf", "rb") as file:
-        base64_pdf = base64.b64encode(file.read()).decode('utf-8')
-    pdf_display = f"""
-        <iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>
-    """
     st.markdown("Visualiza la memoria completa justo debajo o descárgala en PDF:")
-    st.markdown(pdf_display, unsafe_allow_html=True)
-    st.download_button("📥 Descargar memoria (.pdf)", data=base64.b64decode(base64_pdf), file_name="Memoria_Proyecto.pdf")
+
+    pdf_url = "https://raw.githubusercontent.com/davidcuestaa/impacto-economia-poblacion/main/Memoria%20Proyecto.pdf"
+    viewer_url = f"https://mozilla.github.io/pdf.js/web/viewer.html?file={pdf_url}"
+
+    components.iframe(viewer_url, height=850, scrolling=True)
+
+    st.download_button("📥 Descargar memoria (.pdf)", data=None, file_name="Memoria_Proyecto.pdf")
 
 elif menu == "Análisis univariable":
     st.subheader("Análisis univariable: una variable en un país")
