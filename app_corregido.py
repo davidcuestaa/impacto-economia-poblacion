@@ -187,7 +187,19 @@ elif menu == "Memoria del proyecto":
 
     components.iframe(viewer_url, height=850, scrolling=True)
 
-    st.download_button("📥 Descargar memoria (.pdf)", data=None, file_name="Memoria_Proyecto.pdf")
+    # Descargar el contenido del PDF desde GitHub
+    import requests
+
+    response = requests.get(pdf_url)
+    if response.status_code == 200:
+        st.download_button(
+            label="📥 Descargar memoria (.pdf)",
+            data=response.content,
+            file_name="Memoria_Proyecto.pdf",
+            mime="application/pdf"
+        )
+    else:
+        st.error("❌ No se pudo descargar la memoria en PDF desde el servidor.")
 
 elif menu == "Análisis univariable":
     st.subheader("Análisis univariable: una variable en un país")
